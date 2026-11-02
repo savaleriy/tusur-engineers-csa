@@ -1,0 +1,66 @@
+\begin{tikzpicture}[x=1.8mm, y=1mm]
+
+  \tikzset{
+    fld/.style={cell, minimum height=7mm, inner sep=1pt, font=\scriptsize, align=center},
+    tinyfld/.style={cell, minimum height=7mm, inner sep=0pt, font=\tiny, align=center},
+    microfld/.style={cell, minimum height=7mm, inner sep=0pt, font=\fontsize{4}{4}\selectfont, align=center},
+  }
+
+  \node[font=\scriptsize, text=muted, anchor=south west] at (0, 5) {31};
+  \node[font=\scriptsize, text=muted, anchor=south east] at (57.6, 5) {0};
+  \node[font=\scriptsize, text=muted, anchor=south] at (28.8, 5) {биты};
+
+  % R-type
+  \node[font=\ttfamily\small, anchor=east] at (-1.5, 0) {R-type};
+  \node[fld, minimum width=12.6mm, anchor=west] at (0, 0) {funct7};
+  \node[fld, minimum width=9mm, anchor=west] at (12.6, 0) {rs2};
+  \node[fld, minimum width=9mm, anchor=west] at (21.6, 0) {rs1};
+  \node[microfld, minimum width=5.4mm, anchor=west] at (27, 0) {funct3};
+  \node[fld, minimum width=9mm, anchor=west] at (32.4, 0) {rd};
+  \node[fld, minimum width=12.6mm, anchor=west] at (41.4, 0) {opcode};
+  \node[font=\scriptsize, text=muted, anchor=west] at (59.5, 0) {add, sub, xor};
+
+  % I-type
+  \node[font=\ttfamily\small, anchor=east] at (-1.5, -10) {I-type};
+  \node[fld, minimum width=21.6mm, anchor=west] at (0, -10) {imm[11:0]};
+  \node[fld, minimum width=9mm, anchor=west] at (21.6, -10) {rs1};
+  \node[microfld, minimum width=5.4mm, anchor=west] at (27, -10) {funct3};
+  \node[fld, minimum width=9mm, anchor=west] at (32.4, -10) {rd};
+  \node[fld, minimum width=12.6mm, anchor=west] at (41.4, -10) {opcode};
+  \node[font=\scriptsize, text=muted, anchor=west] at (59.5, -10) {addi, lw, jalr};
+
+  % S-type
+  \node[font=\ttfamily\small, anchor=east] at (-1.5, -20) {S-type};
+  \node[fld, minimum width=12.6mm, anchor=west] at (0, -20) {imm[11:5]};
+  \node[fld, minimum width=9mm, anchor=west] at (12.6, -20) {rs2};
+  \node[fld, minimum width=9mm, anchor=west] at (21.6, -20) {rs1};
+  \node[microfld, minimum width=5.4mm, anchor=west] at (27, -20) {funct3};
+  \node[fld, minimum width=9mm, anchor=west] at (32.4, -20) {imm[4:0]};
+  \node[fld, minimum width=12.6mm, anchor=west] at (41.4, -20) {opcode};
+  \node[font=\scriptsize, text=muted, anchor=west] at (59.5, -20) {sw, sb};
+
+  % B-type
+  \node[font=\ttfamily\small, anchor=east] at (-1.5, -30) {B-type};
+  \node[tinyfld, minimum width=12.6mm, anchor=west] at (0, -30) {imm[12|10:5]};
+  \node[fld, minimum width=9mm, anchor=west] at (12.6, -30) {rs2};
+  \node[fld, minimum width=9mm, anchor=west] at (21.6, -30) {rs1};
+  \node[microfld, minimum width=5.4mm, anchor=west] at (27, -30) {funct3};
+  \node[microfld, minimum width=9mm, anchor=west] at (32.4, -30) {imm[4:1|11]};
+  \node[fld, minimum width=12.6mm, anchor=west] at (41.4, -30) {opcode};
+  \node[font=\scriptsize, text=muted, anchor=west] at (59.5, -30) {beq, blt};
+
+  % U-type
+  \node[font=\ttfamily\small, anchor=east] at (-1.5, -40) {U-type};
+  \node[fld, minimum width=36mm, anchor=west] at (0, -40) {imm[31:12]};
+  \node[fld, minimum width=9mm, anchor=west] at (36, -40) {rd};
+  \node[fld, minimum width=12.6mm, anchor=west] at (45, -40) {opcode};
+  \node[font=\scriptsize, text=muted, anchor=west] at (59.5, -40) {lui, auipc};
+
+  % J-type
+  \node[font=\ttfamily\small, anchor=east] at (-1.5, -50) {J-type};
+  \node[tinyfld, minimum width=36mm, anchor=west] at (0, -50) {imm[20|10:1|11|19:12]};
+  \node[fld, minimum width=9mm, anchor=west] at (36, -50) {rd};
+  \node[fld, minimum width=12.6mm, anchor=west] at (45, -50) {opcode};
+  \node[font=\scriptsize, text=muted, anchor=west] at (59.5, -50) {jal};
+
+\end{tikzpicture}

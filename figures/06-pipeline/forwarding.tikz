@@ -1,0 +1,29 @@
+\begin{tikzpicture}[x=10mm, y=9mm]
+
+  \tikzset{
+    stage/.style={cell, minimum width=8.5mm, minimum height=6.5mm, font=\tiny},
+    ex/.style={stage, fill=accent!25},
+  }
+
+  \node[font=\scriptsize, text=muted] at (0.2, 1.2) {такт};
+  \foreach \c in {1,...,6}
+    \node[font=\scriptsize, text=muted] at (\c, 0.8) {\c};
+
+  \node[font=\tiny, anchor=east] at (0.1, -1) {add x1};
+  \node[font=\tiny, anchor=east] at (0.1, -2) {sub x4, x1};
+
+  \node[stage] at (1, -1) {IF};
+  \node[stage] at (2, -1) {ID};
+  \node[ex]    at (3, -1) {EX};
+  \node[stage] at (4, -1) {MEM};
+  \node[stage] at (5, -1) {WB};
+
+  \node[stage] at (2, -2) {IF};
+  \node[stage] at (3, -2) {ID};
+  \node[ex]    at (4, -2) {EX};
+  \node[stage] at (5, -2) {MEM};
+  \node[stage] at (6, -2) {WB};
+
+  \draw[arracc] (3, -1.45) -- (4, -1.55);
+
+\end{tikzpicture}

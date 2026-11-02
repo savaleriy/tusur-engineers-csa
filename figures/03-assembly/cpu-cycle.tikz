@@ -1,0 +1,20 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \node[box, minimum width=20mm] (pc) at (0, 0) {PC};
+  \node[box, minimum width=28mm] (mem) at (36, 0) {память};
+  \node[box, minimum width=20mm] (ir) at (74, 0) {IR};
+  \node[box, minimum width=30mm] (dec) at (112, 0) {дешифратор};
+  \node[box, minimum width=26mm] (reg) at (74, -24) {регистры};
+  \node[box, hi, minimum width=24mm] (alu) at (112, -24) {АЛУ};
+
+  \draw[arr] (pc) -- node[above, font=\scriptsize, text=muted] {1 fetch} (mem);
+  \draw[arr] (mem) -- (ir);
+  \draw[arr] (ir) -- (dec);
+  \draw[arr] (dec) -- node[right, font=\scriptsize, text=muted] {управление} (alu);
+  \draw[arr] (reg) -- (alu);
+  \draw[arr] (alu) -- (reg);
+
+  \node[font=\scriptsize, text=muted, align=center] at (48, -42)
+    {2 decode: IR говорит, что делать; 3 execute: АЛУ считает; 4 writeback: результат в регистр};
+
+\end{tikzpicture}

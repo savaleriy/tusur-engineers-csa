@@ -1,0 +1,30 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \node[box, minimum width=26mm, minimum height=8mm] (v0) at (0, 0) {V0};
+  \node[box, minimum width=26mm, minimum height=8mm] (v1) at (0, -12) {V1};
+  \node[box, minimum width=26mm, minimum height=8mm] (v2) at (0, -24) {V2};
+  \node[box, minimum width=26mm, minimum height=8mm] (v3) at (0, -36) {V3};
+  \node[font=\scriptsize, text=muted] at (0, 10) {виртуальные страницы};
+
+  \node[box, hi, minimum width=44mm, minimum height=56mm, align=center] (pt) at (54, -18)
+    {\textbf{таблица страниц}\\[1mm]\scriptsize V0 $\to$ P2\\V1 $\to$ диск\\V2 $\to$ P0\\V3 $\to$ P1};
+
+  \node[box, minimum width=26mm, minimum height=8mm] (p0) at (108, 0) {P0};
+  \node[box, minimum width=26mm, minimum height=8mm] (p1) at (108, -12) {P1};
+  \node[box, minimum width=26mm, minimum height=8mm] (p2) at (108, -24) {P2};
+  \node[box, minimum width=26mm, minimum height=8mm] (p3) at (108, -36) {P3};
+  \node[font=\scriptsize, text=muted] at (108, 10) {физические страницы};
+
+  \node[ghost, minimum width=34mm, minimum height=10mm] (disk) at (54, -64) {диск, SSD};
+
+  \draw[arr] (v0) -- (pt);
+  \draw[arr] (v1) -- (pt);
+  \draw[arr] (v2) -- (pt);
+  \draw[arr] (v3) -- (pt);
+  \draw[arr] (pt) -- (p0);
+  \draw[arr] (pt) -- (p1);
+  \draw[arr] (pt) -- (p2);
+  \draw[arr] (pt) -- (p3);
+  \draw[arr, draw=accentb] (pt) -- node[right, font=\scriptsize, text=accentb] {page fault} (disk);
+
+\end{tikzpicture}

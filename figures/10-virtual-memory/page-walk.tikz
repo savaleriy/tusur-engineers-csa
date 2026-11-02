@@ -1,0 +1,35 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \tikzset{bit/.style={cell, minimum height=8mm, font=\scriptsize, align=center}}
+
+  \node[bit, minimum width=18mm, anchor=west] (l4) at (0, 0) {9};
+  \node[bit, minimum width=18mm, anchor=west] (l3) at (18, 0) {9};
+  \node[bit, minimum width=18mm, anchor=west] (l2) at (36, 0) {9};
+  \node[bit, minimum width=18mm, anchor=west] (l1) at (54, 0) {9};
+  \node[bit, minimum width=24mm, anchor=west] (off) at (72, 0) {12};
+
+  \node[font=\scriptsize, text=muted] at (9, 7) {47..39};
+  \node[font=\scriptsize, text=muted] at (27, 7) {38..30};
+  \node[font=\scriptsize, text=muted] at (45, 7) {29..21};
+  \node[font=\scriptsize, text=muted] at (63, 7) {20..12};
+  \node[font=\scriptsize, text=muted] at (84, 7) {11..0};
+
+  \node[box, minimum width=20mm] (pm) at (9, -16) {PML4};
+  \node[box, minimum width=20mm] (pd) at (27, -28) {PDP};
+  \node[box, minimum width=20mm] (pdx) at (45, -40) {PD};
+  \node[box, minimum width=20mm] (pt) at (63, -52) {PT};
+  \node[box, hi, minimum width=24mm] (frame) at (84, -64) {4 КБ};
+
+  \draw[arr] (9, -4) -- (pm);
+  \draw[arr] (27, -4) -- (pd);
+  \draw[arr] (45, -4) -- (pdx);
+  \draw[arr] (63, -4) -- (pt);
+  \draw[arr] (72, -4) -- (frame);
+  \draw[arr] (pm) -- (pd);
+  \draw[arr] (pd) -- (pdx);
+  \draw[arr] (pdx) -- (pt);
+  \draw[arr] (pt) -- (frame);
+
+  \node[font=\scriptsize, text=muted] at (42, -76) {каждый уровень: 512 записей по 8 байт = 4 КБ};
+
+\end{tikzpicture}

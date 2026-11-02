@@ -1,0 +1,17 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \node[cell, minimum width=62mm, minimum height=11mm, anchor=west] (sub) at (0, 0)
+    {субнормальные: шаг $2^{-149}$};
+  \node[cell, minimum width=62mm, minimum height=11mm, anchor=west] (norm) at (62, 0)
+    {нормальные: шаг удваивается};
+
+  \draw[decorate, decoration={brace, amplitude=3pt}, draw=muted]
+    (0, 7) -- (62, 7) node[midway, above=2mm, lbl] {плавное исчезновение порядка};
+  \draw[decorate, decoration={brace, amplitude=3pt}, draw=muted]
+    (62, 7) -- (124, 7) node[midway, above=2mm, lbl] {обычные числа};
+
+  \node[font=\scriptsize, text=muted] at (0, -8) {0};
+  \node[font=\scriptsize, text=muted] at (62, -8) {$\mathrm{FLT\_MIN} = 2^{-126}$};
+  \node[font=\scriptsize, text=muted] at (124, -8) {$\ldots$};
+
+\end{tikzpicture}

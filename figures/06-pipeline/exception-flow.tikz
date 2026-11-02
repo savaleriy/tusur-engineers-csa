@@ -1,0 +1,14 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \node[box, minimum width=58mm, align=center] (e) at (0, 0) {\textbf{событие}\\деление на ноль, page fault, прерывание};
+  \node[box, minimum width=58mm, align=center] (csr) at (0, -18) {\textbf{записать CSR}\\mepc, mcause, mtval};
+  \node[box, hi, minimum width=58mm, align=center] (vec) at (0, -36) {\textbf{pc = mtvec}};
+  \node[box, minimum width=58mm, align=center] (h) at (0, -54) {\textbf{обработчик}};
+  \node[box, minimum width=58mm, align=center] (ret) at (0, -72) {\textbf{mret}\\pc = mepc, восстановить режим};
+
+  \draw[arr] (e) -- (csr);
+  \draw[arr] (csr) -- (vec);
+  \draw[arr] (vec) -- (h);
+  \draw[arr] (h) -- (ret);
+
+\end{tikzpicture}

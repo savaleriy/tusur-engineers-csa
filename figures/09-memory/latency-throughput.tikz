@@ -1,0 +1,17 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \node[box, minimum width=32mm] (cpu1) at (0, 0) {ядро};
+  \node[box, minimum width=32mm] (mem1) at (0, -28) {память};
+  \draw[arr] (cpu1) -- node[right, font=\scriptsize, text=muted] {запрос} (mem1);
+  \draw[arr] (mem1) -- node[left, font=\scriptsize, text=muted] {ответ} (cpu1);
+  \node[font=\scriptsize, text=muted, align=center] at (0, -38) {латентность\\один запрос: 100 нс};
+
+  \node[box, minimum width=32mm] (cpu2) at (64, 0) {ядро};
+  \node[box, minimum width=32mm] (mem2) at (64, -28) {память};
+  \foreach \dx in {-9, -3, 3, 9} {
+    \draw[arr] ([xshift=\dx mm]cpu2.south) -- ([xshift=\dx mm]mem2.north);
+    \draw[arr] ([xshift=\dx mm]mem2.north) -- ([xshift=\dx mm]cpu2.south);
+  }
+  \node[font=\scriptsize, text=muted, align=center] at (64, -38) {пропускная способность\\много запросов в полете};
+
+\end{tikzpicture}

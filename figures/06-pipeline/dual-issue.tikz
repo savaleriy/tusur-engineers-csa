@@ -1,0 +1,21 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \node[box, minimum width=26mm] (if) at (0, 0) {IF};
+  \node[box, minimum width=26mm] (id) at (34, 0) {ID};
+  \node[box, minimum width=26mm] (disp) at (68, 0) {dispatch};
+  \node[box, hi, minimum width=30mm] (ex0) at (108, 9) {EX0};
+  \node[box, hi, minimum width=30mm] (ex1) at (108, -9) {EX1};
+  \node[box, minimum width=26mm] (mem) at (146, 0) {MEM};
+  \node[box, minimum width=26mm] (wb) at (180, 0) {WB};
+
+  \draw[arr] (if) -- (id);
+  \draw[arr] (id) -- (disp);
+  \draw[arr] (disp) -- (ex0);
+  \draw[arr] (disp) -- (ex1);
+  \draw[arr] (ex0) -- (mem);
+  \draw[arr] (ex1) -- (mem);
+  \draw[arr] (mem) -- (wb);
+
+  \node[font=\scriptsize, text=muted, align=center] at (108, 22) {два исполнительных блока\\две инструкции за такт};
+
+\end{tikzpicture}

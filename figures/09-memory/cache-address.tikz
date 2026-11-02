@@ -1,0 +1,21 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \tikzset{
+    bit/.style={cell, minimum height=9mm, font=\scriptsize, align=center},
+  }
+
+  \node[bit, minimum width=60mm, anchor=west] (tag) at (0, 0) {tag};
+  \node[bit, minimum width=18mm, anchor=west] (idx) at (60, 0) {index};
+  \node[bit, minimum width=18mm, anchor=west] (off) at (78, 0) {offset};
+
+  \node[font=\scriptsize, text=muted] at (30, 7) {31 \ldots 12};
+  \node[font=\scriptsize, text=muted] at (69, 7) {11 \ldots 6};
+  \node[font=\scriptsize, text=muted] at (87, 7) {5 \ldots 0};
+
+  \node[font=\scriptsize, text=muted] at (30, -7) {20 бит};
+  \node[font=\scriptsize, text=muted] at (69, -7) {6 бит};
+  \node[font=\scriptsize, text=muted] at (87, -7) {6 бит};
+
+  \node[font=\small] at (48, -16) {$S = \dfrac{C}{B \cdot W} = \dfrac{32768}{64 \cdot 8} = 64$};
+
+\end{tikzpicture}

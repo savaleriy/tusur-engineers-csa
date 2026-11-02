@@ -1,0 +1,19 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \tikzset{tape/.style={cell, minimum width=11mm, minimum height=9mm, font=\small}}
+
+  \foreach \i/\s in {0/{\ldots}, 1/1, 2/0, 3/1, 4/1, 5/0, 6/{\ldots}}
+    \node[tape] at (\i * 11, 0) {\s};
+
+  \node[font=\scriptsize, text=muted] at (33, 9) {лента};
+
+  \fill[accent!35] (38.5, 3) -- (49.5, 3) -- (44, -2) -- cycle;
+  \draw[draw=accent] (44, -2) -- (44, -9);
+
+  \node[box, hi, minimum width=18mm] (q) at (44, -20) {\textbf{q3}};
+  \node[font=\scriptsize, text=muted, align=center] at (44, -30) {головка читает 1,\\записывает 0 и идет вправо};
+
+  \node[font=\small, align=left] at (78, -12)
+    {$(q3, 1) \to (q4, 0, R)$};
+
+\end{tikzpicture}

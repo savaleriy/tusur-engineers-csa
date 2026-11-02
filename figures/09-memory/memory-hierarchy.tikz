@@ -1,0 +1,21 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \node[box, minimum width=36mm, minimum height=10mm] (reg) at (0, 0)
+    {\textbf{Регистры}\quad < 1 КБ\quad < 1 такта};
+  \node[box, hi, minimum width=50mm, minimum height=10mm] (l1) at (0, -12)
+    {\textbf{L1}\quad 32-48 КБ\quad 4-5 тактов};
+  \node[box, minimum width=64mm, minimum height=10mm] (l2) at (0, -24)
+    {\textbf{L2}\quad 0.5-2 МБ\quad 12-15 тактов};
+  \node[box, minimum width=78mm, minimum height=10mm] (l3) at (0, -36)
+    {\textbf{L3}\quad десятки МБ\quad 40-70 тактов};
+  \node[box, minimum width=92mm, minimum height=10mm] (dram) at (0, -48)
+    {\textbf{DRAM}\quad гигабайты\quad 60-100 нс};
+  \node[box, minimum width=106mm, minimum height=10mm] (ssd) at (0, -60)
+    {\textbf{SSD, сеть}\quad терабайты\quad микросекунды};
+
+  \draw[arr, draw=muted] (-58, 3) -- (-58, -63)
+    node[midway, left=2mm, lbl, rotate=90] {быстрее и дороже};
+  \draw[arr, draw=muted] (58, 3) -- (58, -63)
+    node[midway, right=2mm, lbl, rotate=90] {больше и дешевле};
+
+\end{tikzpicture}

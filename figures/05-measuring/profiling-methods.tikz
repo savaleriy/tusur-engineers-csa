@@ -1,0 +1,14 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \node[box, minimum width=44mm, minimum height=34mm, align=center] (ins) at (0, 0)
+    {\textbf{Инструментирование}\\[1mm]\scriptsize таймеры внутри кода\\[1mm]\scriptsize точно для выбранных мест\\[1mm]\scriptsize меняет код и скорость};
+  \node[box, hi, minimum width=44mm, minimum height=34mm, align=center] (sam) at (48, 0)
+    {\textbf{Статистический профиль}\\[1mm]\scriptsize прерывания 1000 раз в секунду\\[1mm]\scriptsize дёшево, код не меняется\\[1mm]\scriptsize приблизительно};
+  \node[box, minimum width=44mm, minimum height=34mm, align=center] (sim) at (96, 0)
+    {\textbf{Симуляция}\\[1mm]\scriptsize модель процессора\\[1mm]\scriptsize точно и воспроизводимо\\[1mm]\scriptsize в 10-100 раз медленнее};
+
+  \node[font=\scriptsize, text=muted] at (0, -23) {printf + clock\_gettime};
+  \node[font=\scriptsize, text=muted] at (48, -23) {perf record};
+  \node[font=\scriptsize, text=muted] at (96, -23) {valgrind, llvm-mca};
+
+\end{tikzpicture}

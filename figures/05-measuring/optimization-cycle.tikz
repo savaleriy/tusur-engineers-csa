@@ -1,0 +1,17 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \node[box, minimum width=30mm, minimum height=11mm] (m) at (0, 0) {1. Замер\\\scriptsize сколько};
+  \node[box, minimum width=30mm, minimum height=11mm] (p) at (45, 0) {2. Профиль\\\scriptsize где};
+  \node[box, minimum width=30mm, minimum height=11mm] (c) at (60, -24) {3. Счетчики\\\scriptsize почему};
+  \node[box, minimum width=30mm, minimum height=11mm] (h) at (38, -46) {4. Гипотеза\\\scriptsize что мешает};
+  \node[box, hi, minimum width=30mm, minimum height=11mm] (ch) at (0, -46) {5. Изменение\\\scriptsize одно};
+  \node[box, minimum width=30mm, minimum height=11mm] (v) at (-20, -24) {6. Проверка\\\scriptsize и отчет};
+
+  \draw[arr] (m) -- (p);
+  \draw[arr] (p) -- (c);
+  \draw[arr] (c) -- (h);
+  \draw[arr] (h) -- (ch);
+  \draw[arr] (ch) -- (v);
+  \draw[arr] (v) -- (m);
+
+\end{tikzpicture}

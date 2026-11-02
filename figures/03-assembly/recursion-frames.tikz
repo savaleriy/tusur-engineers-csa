@@ -1,0 +1,16 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \node[box, minimum width=105mm, minimum height=12mm, anchor=west, align=left] (f3) at (0, 0)
+    {\textbf{fact(3)}\quad\texttt{ra -> main}\quad\texttt{s0 = значение main}};
+  \node[box, minimum width=105mm, minimum height=12mm, anchor=west, align=left] (f2) at (0, -16)
+    {\textbf{fact(2)}\quad\texttt{ra -> fact(3)}\quad\texttt{s0 = 3}};
+  \node[ghost, minimum width=105mm, minimum height=12mm, anchor=west, align=left] (f1) at (0, -32)
+    {\textbf{fact(1)}\quad листовой путь, кадра нет};
+
+  \draw[arr] ([xshift=10mm]f3.south) -- ([xshift=10mm]f2.north);
+  \draw[arr] ([xshift=10mm]f2.south) -- ([xshift=10mm]f1.north);
+
+  \draw[arr, draw=muted] (-7, 5) -- (-7, -37)
+    node[midway, left=1mm, lbl, rotate=90] {стек растет вниз};
+
+\end{tikzpicture}

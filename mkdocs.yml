@@ -1,0 +1,110 @@
+site_name: Архитектура вычислительных комплексов
+site_description: Архитектура вычислительных комплексов
+site_url: https://savaleriy.github.io/tusur-csa/
+repo_url: https://github.com/savaleriy/tusur-csa
+docs_dir: docs
+site_dir: site
+
+validation:
+  anchors: warn
+
+theme:
+  name: material
+  language: ru
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - content.code.copy
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Темная тема
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Светлая тема
+
+plugins:
+  - search:
+      lang:
+        - ru
+        - en
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.details
+  - footnotes
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js
+
+nav:
+  - Курс: index.md
+  - Инструменты: tools.md
+  - Модули:
+      - "1. Производительность и железо": modules/01-intro.md
+      - "2. Целые числа и битовые операции": modules/02-integers.md
+      - "3. Чтение ассемблера: ISA, вызовы и стек": modules/03-assembly.md
+      - "4. Плавающая точка: IEEE 754": modules/04-floating-point.md
+      - "5. Как измерять производительность (WIP)": modules/05-measuring.md
+      - "6. Конвейер, ILP и планирование (WIP)": modules/06-pipeline-ilp.md
+      - "7. Ветвления, косвенные вызовы и раскладка кода (WIP)": modules/07-branches.md
+      - "8. Компилятор: флаги, UB и контракты (WIP)": modules/08-compiler.md
+      - "9. Иерархия памяти (WIP)": modules/09-memory.md
+      - "10. Виртуальная память и предвыборка (WIP)": modules/10-virtual-memory.md
+      - "11. Cache-friendly алгоритмы и раскладка данных (WIP)": modules/11-cache-friendly.md
+      - "12. Базовые абстрактные типы данных (WIP)": modules/12-adt.md
+      - "13. Структуры данных и кэш (WIP)": modules/13-data-structures.md
+      - "14. Внешняя память и сортировка (WIP)": modules/14-external-memory.md
+      - "15. SIMD: векторные регистры и интринсики (WIP)": modules/15-simd.md
+      - "16. SIMD: маски, перестановки и сбор данных (WIP)": modules/16-simd-masks.md
+      - "17. Модульная арифметика и хеширование (WIP)": modules/17-modular-arithmetic.md
+      - "18. Потоки и синхронизация (WIP)": modules/18-threads.md
+      - "19. Roofline и как устроен BLAS (WIP)": modules/19-roofline.md
+  - Задания:
+      - Обзор: tasks/index.md
+      - "1. Python, C и Godbolt": tasks/01-python-godbolt.md
+      - "2. Биты без ветвлений": tasks/02-bits.md
+      - "3. Чтение ассемблера": tasks/03-assembly.md
+      - "4. Плавающая точка и точность": tasks/04-floating-point.md
+      - "5. Профилирование черного ящика (WIP)": tasks/05-profiling.md
+      - "6. Конвейер, ILP и планирование (WIP)": tasks/06-pipeline-ilp.md
+      - "7. Ветвления и раскладка кода (WIP)": tasks/07-branches.md
+      - "8. Компилятор и неопределенное поведение (WIP)": tasks/08-compiler.md
+      - "9. Латентность и пропускная способность памяти (WIP)": tasks/09-memory.md
+      - "10. Линия, ассоциативность, TLB (WIP)": tasks/10-virtual-memory.md
+      - "11. Транспонирование и блочность (WIP)": tasks/11-cache-friendly.md
+      - "12. Базовые АТД на C (WIP)": tasks/12-adt.md
+      - "13. Поиск, сортировка и графы (WIP)": tasks/13-data-structures.md
+      - "14. Внешняя сортировка (WIP)": tasks/14-external-memory.md
+      - "15. Сумма и argmin на AVX2 (WIP)": tasks/15-simd.md
+      - "16. Маски, перестановки и сбор данных (WIP)": tasks/16-simd-masks.md
+      - "17. Модульная арифметика и хеши (WIP)": tasks/17-modular.md
+      - "18. Потоки, синхронизация и NUMA (WIP)": tasks/18-threads.md
+      - "19. GEMM и roofline (WIP)": tasks/19-gemm.md
+  - Приложения:
+      - Язык C: note_c.md
+      - Ассемблер x86-64 и RISC-V: appendix/asm.md
+      - Bash: appendix/bash.md
+      - Git: appendix/git.md

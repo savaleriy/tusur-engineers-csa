@@ -1,0 +1,22 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \node[box, hi, minimum width=32mm, minimum height=16mm, align=center] (p) at (0, 0)
+    {\textbf{Программа}};
+
+  \node[box, minimum width=72mm, minimum height=12mm, anchor=west] (tlp) at (52, 22)
+    {\textbf{Потоки на разных ядрах}\quad\textcolor{accent}{\textbf{TLP}}\\[0.3mm]\scriptsize модуль 18};
+  \node[box, minimum width=72mm, minimum height=12mm, anchor=west] (dlp) at (52, 7)
+    {\textbf{Векторные инструкции}\quad\textcolor{accent}{\textbf{DLP}}\\[0.3mm]\scriptsize модули 15-16};
+  \node[box, minimum width=72mm, minimum height=12mm, anchor=west] (ilp) at (52, -8)
+    {\textbf{Несколько инструкций за такт}\quad\textcolor{accent}{\textbf{ILP}}\\[0.3mm]\scriptsize модуль 6};
+  \node[box, minimum width=72mm, minimum height=12mm, anchor=west] (mlp) at (52, -23)
+    {\textbf{Несколько запросов к памяти}\quad\textcolor{accent}{\textbf{MLP}}\\[0.3mm]\scriptsize модули 9-10};
+
+  \draw[draw=fg] (p.east) -- (22, 0);
+  \draw[draw=fg] (22, 22) -- (22, -23);
+  \draw[arr] (22, 22) -- (tlp.west);
+  \draw[arr] (22, 7)  -- (dlp.west);
+  \draw[arr] (22, -8) -- (ilp.west);
+  \draw[arr] (22, -23) -- (mlp.west);
+
+\end{tikzpicture}

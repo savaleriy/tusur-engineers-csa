@@ -1,0 +1,16 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \node[box, align=left, minimum width=42mm] (addrs) at (0, 0)
+    {\textbf{адреса}\\[0.5mm]\scriptsize 0x0000\\0x1000\\0x2000\\\ldots\\0x8000};
+
+  \node[box, hi, minimum width=52mm, minimum height=52mm, align=center] (set) at (64, 0)
+    {\textbf{набор 0}\\[1mm]\scriptsize 8 строк (8-way)\\[8mm]
+     \scriptsize 8 адресов помещаются,\\девятый вытесняет один из них};
+
+  \draw[arr] (addrs.east) -- node[above, font=\scriptsize, text=muted] {set = 0} (set.west);
+
+  \node[box, draw=accentb, fill=accentb!15, minimum width=42mm] (evict) at (0, -28)
+    {\textbf{девятый адрес}\\\scriptsize снова в набор 0};
+  \draw[arr, draw=accentb] (evict.east) -- node[below, font=\scriptsize, text=accentb] {вытеснение} (set.south west);
+
+\end{tikzpicture}

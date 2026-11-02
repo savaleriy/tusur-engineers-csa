@@ -1,0 +1,20 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \node[box, minimum width=62mm, minimum height=13mm] (c) at (0, 0)
+    {\textbf{Программа на C}\\[0.6mm] \texttt{matmul.c}};
+  \node[box, hi, minimum width=62mm, minimum height=13mm] (isa) at (0, -21)
+    {\textbf{Инструкции ISA}\\[0.6mm] x86-64, RISC-V, AArch64};
+  \node[box, minimum width=62mm, minimum height=13mm] (u) at (0, -42)
+    {\textbf{Микрооперации и железо}\\[0.6mm] порты, кэши, предсказатель};
+
+  \draw[arr] (c) -- node[right=1.2mm, lbl] {компилятор} (isa);
+  \draw[arr] (isa) -- node[right=1.2mm, lbl] {декодер} (u);
+
+  \draw[decorate, decoration={brace, amplitude=3pt}, draw=muted]
+    ([xshift=4mm]isa.north east) -- ([xshift=4mm]isa.south east)
+    node[midway, right=3mm, lbl, align=left] {контракт:\\что делает код};
+  \draw[decorate, decoration={brace, amplitude=3pt}, draw=muted]
+    ([xshift=4mm]u.north east) -- ([xshift=4mm]u.south east)
+    node[midway, right=3mm, lbl, align=left] {реализация:\\сколько это стоит};
+
+\end{tikzpicture}

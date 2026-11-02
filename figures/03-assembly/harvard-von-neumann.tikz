@@ -1,0 +1,18 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  % Harvard
+  \node[box, hi, minimum width=26mm] (cpu1) at (0, 0) {CPU};
+  \node[box, minimum width=30mm] (imem) at (-28, -22) {память команд};
+  \node[box, minimum width=30mm] (dmem) at (28, -22) {память данных};
+  \draw[arr] (cpu1) -- (imem);
+  \draw[arr] (cpu1) -- (dmem);
+  \node[font=\scriptsize, text=muted] at (0, -34) {\textbf{Harvard}: две памяти, две шины};
+
+  % von Neumann
+  \node[box, hi, minimum width=26mm] (cpu2) at (100, 0) {CPU};
+  \node[box, minimum width=46mm] (mem2) at (100, -22) {общая память};
+  \draw[arr] (cpu2) -- node[right, font=\scriptsize, text=muted] {шина} (mem2);
+  \draw[arr] (mem2) -- (cpu2);
+  \node[font=\scriptsize, text=muted] at (100, -34) {\textbf{фон Нейман}: одна память для команд и данных};
+
+\end{tikzpicture}

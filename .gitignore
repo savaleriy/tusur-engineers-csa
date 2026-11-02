@@ -1,0 +1,27 @@
+# MkDocs
+.venv/
+site/
+
+# Сборка шаблонов заданий
+templates/*/build/
+templates/*/asm/
+templates/*/results/
+
+# Скачанные внешние материалы: большие, со своими лицензиями и своими .git
+ref/
+
+# Эталонные решения - не публиковать (репозиторий открытый, на нем GitHub Pages).
+# Храните их в отдельном приватном репозитории.
+solutions/
+**/solutions/
+
+__pycache__/
+
+.cache/
+.preview/
+fig.aux
+fig.log
+fig.pdf
+texput.log
+*.aux
+*.log

@@ -1,0 +1,20 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \node[cell, minimum width=12mm, minimum height=10mm] (s) at (0, 0) {\textbf{s}};
+  \node[cell, minimum width=24mm, minimum height=10mm, anchor=west] (e) at (12, 0) {\textbf{e}};
+  \node[cell, minimum width=47mm, minimum height=10mm, anchor=west] (m) at (36, 0) {\textbf{m}};
+
+  \node[font=\scriptsize, text=muted] at (6, 8) {31};
+  \node[font=\scriptsize, text=muted] at (6, -8) {знак};
+  \node[font=\scriptsize, text=muted] at (24, 8) {30..23};
+  \node[font=\scriptsize, text=muted] at (24, -8) {порядок};
+  \node[font=\scriptsize, text=muted] at (59, 8) {22..0};
+  \node[font=\scriptsize, text=muted] at (59, -8) {мантисса};
+
+  \node[font=\scriptsize, text=muted] at (6, -12) {1 бит};
+  \node[font=\scriptsize, text=muted] at (24, -12) {8 бит};
+  \node[font=\scriptsize, text=muted] at (59, -12) {23 бита};
+
+  \node[font=\small] at (41, -20) {$x = (-1)^s \cdot 1.m \cdot 2^{e-127}$};
+
+\end{tikzpicture}

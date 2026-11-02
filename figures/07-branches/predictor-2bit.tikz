@@ -1,0 +1,27 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \tikzset{
+    state/.style={circle, draw=fg, fill=boxfill, minimum size=15mm, align=center, font=\scriptsize, inner sep=1pt},
+    hot/.style={state, draw=accent, fill=accent!18},
+  }
+
+  \node[state] (snt) at (0, 0) {SNT\\\tiny not taken};
+  \node[state] (wnt) at (32, 0) {WNT\\\tiny not taken};
+  \node[hot]   (wt)  at (64, 0) {WT\\\tiny taken};
+  \node[hot]   (st)  at (96, 0) {ST\\\tiny taken};
+
+  \draw[arr] (snt) to[bend left=22] node[above, font=\scriptsize, text=muted] {T} (wnt);
+  \draw[arr] (wnt) to[bend left=22] node[above, font=\scriptsize, text=muted] {T} (wt);
+  \draw[arr] (wt)  to[bend left=22] node[above, font=\scriptsize, text=muted] {T} (st);
+
+  \draw[arr] (wnt) to[bend left=22] node[below, font=\scriptsize, text=muted] {N} (snt);
+  \draw[arr] (wt)  to[bend left=22] node[below, font=\scriptsize, text=muted] {N} (wnt);
+  \draw[arr] (st)  to[bend left=22] node[below, font=\scriptsize, text=muted] {N} (wt);
+
+  \draw[arr] (snt) to[loop above] node[above, font=\scriptsize, text=muted] {N} (snt);
+  \draw[arr] (st)  to[loop above] node[above, font=\scriptsize, text=muted] {T} (st);
+
+  \node[font=\scriptsize, text=muted, align=center] at (48, -22)
+    {прогноз \textbf{taken} для WT и ST, \textbf{not taken} для SNT и WNT};
+
+\end{tikzpicture}

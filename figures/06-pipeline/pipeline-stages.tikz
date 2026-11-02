@@ -1,0 +1,26 @@
+\begin{tikzpicture}[x=10mm, y=8mm]
+
+  \tikzset{
+    stage/.style={cell, minimum width=8.5mm, minimum height=6.5mm, font=\tiny},
+    ex/.style={stage, fill=accent!25},
+  }
+
+  \node[font=\scriptsize, text=muted] at (0.2, 1.2) {такт};
+  \foreach \c in {1,...,9}
+    \node[font=\scriptsize, text=muted] at (\c, 0.8) {\c};
+
+  \foreach \r/\name in {1/I1, 2/I2, 3/I3, 4/I4, 5/I5}
+    \node[font=\scriptsize, anchor=east] at (0.1, -\r) {\name};
+
+  \foreach \r in {1,...,5} {
+    \foreach \s/\st in {0/IF, 1/ID, 2/EX, 3/MEM, 4/WB} {
+      \pgfmathsetmacro{\c}{\r + \s}
+      \ifnum\s=2
+        \node[ex] at (\c, -\r) {\st};
+      \else
+        \node[stage] at (\c, -\r) {\st};
+      \fi
+    }
+  }
+
+\end{tikzpicture}

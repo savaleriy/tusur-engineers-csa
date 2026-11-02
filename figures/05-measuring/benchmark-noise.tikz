@@ -1,0 +1,16 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \draw[->, draw=fg] (0, 0) -- (85, 0);
+  \foreach \x/\t in {0/0.18, 20/0.20, 40/0.22, 60/0.24, 80/0.26}
+    \draw[draw=fg] (\x, 0) -- (\x, -1.5) node[below, font=\scriptsize, text=muted] {\t};
+
+  % десять запусков: значение в секундах -> (v - 0.18) * 1000 мм
+  \foreach \v/\r in {205/0, 197/1, 187/2, 197/3, 181/4, 188/5, 224/6, 251/7, 204/8, 213/9}
+    \fill[accent] ({\v - 180}, {2 + \r * 1.6}) circle (1.2pt);
+
+  \draw[dashed, draw=accentb] (20.5, 0) -- (20.5, 18)
+    node[above right, font=\scriptsize, text=accentb] {медиана 0.200};
+
+  \node[font=\scriptsize, text=muted] at (42, -7) {время, секунды};
+
+\end{tikzpicture}

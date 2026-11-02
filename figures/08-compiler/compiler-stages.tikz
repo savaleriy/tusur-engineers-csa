@@ -1,0 +1,29 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \node[box, minimum width=26mm, minimum height=12mm, align=center] (src) at (0, 0)
+    {\textbf{.c}\\[0.4mm]\scriptsize исходник};
+  \node[box, minimum width=26mm, minimum height=12mm, align=center] (cpp) at (34, 0)
+    {\textbf{препроцессор}\\[0.4mm]\scriptsize макросы, заголовки};
+  \node[box, minimum width=26mm, minimum height=12mm, align=center] (front) at (68, 0)
+    {\textbf{front-end}\\[0.4mm]\scriptsize разбор, типы, IR};
+  \node[box, hi, minimum width=26mm, minimum height=12mm, align=center] (mid) at (102, 0)
+    {\textbf{middle-end}\\[0.4mm]\scriptsize оптимизации IR};
+  \node[box, minimum width=26mm, minimum height=12mm, align=center] (back) at (136, 0)
+    {\textbf{back-end}\\[0.4mm]\scriptsize инструкции, регистры};
+  \node[box, minimum width=26mm, minimum height=12mm, align=center] (bin) at (170, 0)
+    {\textbf{as + ld}\\[0.4mm]\scriptsize объект и бинарник};
+
+  \draw[arr] (src) -- (cpp);
+  \draw[arr] (cpp) -- (front);
+  \draw[arr] (front) -- (mid);
+  \draw[arr] (mid) -- (back);
+  \draw[arr] (back) -- (bin);
+
+  \node[font=\scriptsize, text=muted] at (0, -12) {\texttt{-E}};
+  \node[font=\scriptsize, text=muted] at (34, -12) {\texttt{.i}};
+  \node[font=\scriptsize, text=muted] at (68, -12) {IR};
+  \node[font=\scriptsize, text=muted] at (102, -12) {IR};
+  \node[font=\scriptsize, text=muted] at (136, -12) {\texttt{-S}};
+  \node[font=\scriptsize, text=muted] at (170, -12) {\texttt{-c}, link};
+
+\end{tikzpicture}
