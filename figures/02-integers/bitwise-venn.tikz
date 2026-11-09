@@ -1,0 +1,51 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \tikzset{
+    venn/.style={draw=fg, thick},
+    ttl/.style={font=\small\bfseries, anchor=north},
+    setlbl/.style={font=\small},
+  }
+
+  % AND: пересечение
+  \begin{scope}[shift={(0,0)}]
+    \begin{scope}
+      \clip (0,0) circle (9);
+      \fill[accent!35!mixbg] (6,0) circle (9);
+    \end{scope}
+    \draw[venn] (0,0) circle (9);
+    \draw[venn] (6,0) circle (9);
+    \node[setlbl] at (-4,0) {$A$};
+    \node[setlbl] at (10,0) {$B$};
+    \node[ttl] at (3,-11.5) {$A \cap B$};
+  \end{scope}
+
+  % OR: объединение
+  \begin{scope}[shift={(50,0)}]
+    \fill[accent!35!mixbg] (0,0) circle (9);
+    \fill[accent!35!mixbg] (6,0) circle (9);
+    \draw[venn] (0,0) circle (9);
+    \draw[venn] (6,0) circle (9);
+    \node[setlbl] at (-4,0) {$A$};
+    \node[setlbl] at (10,0) {$B$};
+    \node[ttl] at (3,-11.5) {$A \cup B$};
+  \end{scope}
+
+  % XOR: симметрическая разность
+  \begin{scope}[shift={(0,-31)}]
+    \fill[accent!35!mixbg, even odd rule] (0,0) circle (9) (6,0) circle (9);
+    \draw[venn] (0,0) circle (9);
+    \draw[venn] (6,0) circle (9);
+    \node[setlbl] at (-4,0) {$A$};
+    \node[setlbl] at (10,0) {$B$};
+    \node[ttl] at (3,-11.5) {$A \oplus B$};
+  \end{scope}
+
+  % NOT: дополнение
+  \begin{scope}[shift={(50,-31)}]
+    \fill[accent!35!mixbg, even odd rule] (-12,-10) rectangle (12,10) (0,0) circle (9);
+    \draw[venn] (0,0) circle (9);
+    \node[setlbl] at (0,0) {$A$};
+    \node[ttl] at (0,-11.5) {$\overline{A}$};
+  \end{scope}
+
+\end{tikzpicture}

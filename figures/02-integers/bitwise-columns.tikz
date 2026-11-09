@@ -1,0 +1,51 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \newcommand{\bitrow}[3]{%
+    \node[rowlab] at (-4,#1) {#2};
+    \foreach \b [count=\i from 0] in {#3} {%
+      \ifnum\b=1
+        \node[one] at (\i*7,#1) {1};
+      \else
+        \node[zero] at (\i*7,#1) {0};
+      \fi
+    }%
+  }
+
+  \tikzset{
+    bit/.style={cell, minimum width=7mm, minimum height=8mm, font=\ttfamily\small},
+    one/.style={bit, fill=accent!28!mixbg},
+    zero/.style={bit, fill=boxfill},
+    rowlab/.style={font=\ttfamily\small, anchor=east},
+    hex/.style={font=\ttfamily\scriptsize, text=muted, anchor=west},
+  }
+
+  \node[font=\scriptsize, text=muted, anchor=east] at (-4,8) {бит};
+  \foreach \p [count=\i from 0] in {7,6,5,4,3,2,1,0} {
+    \node[font=\scriptsize, text=muted] at (\i*7,8) {\p};
+  }
+
+  \bitrow{0}{A}{1,1,0,0,1,0,1,0}
+  \bitrow{-8}{B}{1,0,1,0,1,1,0,0}
+
+  \draw[muted, densely dashed] (-4,-13) -- (52,-13);
+
+  \bitrow{-21}{A \& B}{1,0,0,0,1,0,0,0}
+  \bitrow{-29}{A | B}{1,1,1,0,1,1,1,0}
+  \bitrow{-37}{A \textasciicircum{} B}{0,1,1,0,0,1,1,0}
+  \bitrow{-45}{\textasciitilde A}{0,0,1,1,0,1,0,1}
+  \bitrow{-53}{A \& \textasciitilde B}{0,1,0,0,0,0,1,0}
+
+  \node[hex] at (52,0) {0xCA};
+  \node[hex] at (52,-8) {0xAC};
+  \node[hex] at (52,-21) {0x88};
+  \node[hex] at (52,-29) {0xEE};
+  \node[hex] at (52,-37) {0x66};
+  \node[hex] at (52,-45) {0x35};
+  \node[hex] at (52,-53) {0x42};
+
+  \draw[muted, densely dashed] (24.5,5) -- (24.5,-57);
+
+  \node[font=\scriptsize, text=muted, anchor=north] at (24,-60)
+    {каждый столбец считается независимо};
+
+\end{tikzpicture}

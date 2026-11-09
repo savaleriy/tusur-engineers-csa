@@ -1,0 +1,33 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \newcommand{\shiftrow}[3]{%
+    \node[font=\small, anchor=east] at (-4,#1) {#2};
+    \foreach \b [count=\i from 0] in {#3} {%
+      \ifnum\b=1
+        \node[bit] at (\i*9,#1) {1};
+      \else
+        \node[bit] at (\i*9,#1) {0};
+      \fi
+    }%
+  }
+
+  \tikzset{
+    bit/.style={cell, minimum width=9mm, minimum height=8mm, font=\ttfamily\small},
+  }
+
+  \shiftrow{0}{$A$}{1,0,1,1}
+  \shiftrow{-11}{$A \ll 1$}{0,1,1,0}
+  \shiftrow{-22}{$A \gg 1$ лог.}{0,1,0,1}
+  \shiftrow{-33}{$A \gg 1$ арифм.}{1,1,0,1}
+
+  \node[font=\scriptsize, text=muted, anchor=south] at (0,4.5) {знак};
+
+  \node[bit, draw=accent, fill=accent!28!mixbg] at (27,-11) {0};
+  \node[bit, draw=accent, fill=accent!28!mixbg] at (0,-22) {0};
+  \node[bit, draw=accentb, fill=accentb!28!mixbg] at (0,-33) {1};
+
+  \node[font=\scriptsize, text=accent, anchor=west] at (32,-11) {вдвигается 0};
+  \node[font=\scriptsize, text=accent, anchor=west] at (32,-22) {вдвигается 0};
+  \node[font=\scriptsize, text=accentb, anchor=west] at (32,-33) {вдвигается 1};
+
+\end{tikzpicture}

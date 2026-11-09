@@ -1,0 +1,26 @@
+\begin{tikzpicture}[x=1mm, y=1mm]
+
+  \tikzset{
+    st/.style={box, minimum width=24mm, minimum height=9mm, font=\small},
+    note/.style={font=\scriptsize, text=muted, align=center},
+  }
+
+  \node[st] (x0) at (0,0) {$(a,b,c)$};
+  \node[st] (x1) at (36,0) {$(b,a,c)$};
+  \node[st] (x2) at (76,0) {$(c,a,b)$};
+  \draw[arr] (x0) -- (x1);
+  \draw[arr] (x1) -- (x2);
+  \node[note] at (18,11) {$\mathrm{swap}(a,b)$};
+  \node[note] at (56,11) {$\mathrm{swap}(a,c)$};
+  \node[note, anchor=north] at (38,-8)
+    {XOR: два обмена, без временной переменной};
+
+  \node[st] (y0) at (0,-30) {$(a,b,c)$};
+  \node[st] (y1) at (76,-30) {$(b,c,a)$};
+  \draw[arr] (y0) -- (y1);
+  \node[note, anchor=north, align=center] at (38,-36)
+    {сумма: $a{+}{=}b{+}c$,\\ затем три вычитания};
+  \node[note, anchor=north] at (38,-44)
+    {арифметика: по модулю $2^{32}$, без временной переменной};
+
+\end{tikzpicture}
