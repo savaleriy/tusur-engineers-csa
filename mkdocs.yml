@@ -103,8 +103,10 @@ nav:
       - "17. Модульная арифметика и хеши (WIP)": tasks/17-modular.md
       - "18. Потоки, синхронизация и NUMA (WIP)": tasks/18-threads.md
       - "19. GEMM и roofline (WIP)": tasks/19-gemm.md
+  - Студенты 2026: people_2026.md
   - Приложения:
       - Язык C: note_c.md
+      - "SGEMM: от naive до OpenMP": appendix/sgemm.md
       - Ассемблер x86-64 и RISC-V: appendix/asm.md
       - Bash: appendix/bash.md
       - Git: appendix/git.md
