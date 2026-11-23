@@ -1,8 +1,5 @@
 # Задание 6. Конвейер, ILP и планирование
 
-!!! warning "WIP"
-    Задание в работе: условия и код могут меняться.
-
 > Модуль 6: [Конвейер, ILP и планирование](../modules/06-pipeline-ilp.md). Нужно: `gcc`, `perf stat`, `llvm-mca`, [uops.info](https://uops.info).
 
 ## Цель
@@ -21,8 +18,9 @@
 #define REP16(s) s; s; s; s; s; s; s; s; s; s; s; s; s; s; s; s
 
 static uint64_t lat_imul(uint64_t x, long n) {
-    for (long i = 0; i < n; i++)
+    for (long i = 0; i < n; i++) {
         REP16(__asm__ volatile("imul %0, %0" : "+r"(x)));
+    }
     return x;
 }
 
@@ -66,31 +64,37 @@ int main(int argc, char **argv) {
 
 ```bash
 gcc -O2 asm_bench.c -o asm_bench
-perf stat -e cycles ./asm_bench 1000000 1
-perf stat -e cycles ./asm_bench 1000000 2
+gcc -O2 -S asm_bench.c -o asm_bench.s
+perf stat -r 5 -e cycles ./asm_bench 1000000 1   # латентность
+perf stat -r 5 -e cycles ./asm_bench 1000000 2   # пропускная способность
 ```
 
-В первом режиме 16 инструкций образуют одну зависимую цепочку; во втором 16 инструкций независимы и идут через восемь регистров. В обоих случаях число инструкций равно $16n$, поэтому
+В первом режиме 16 инструкций образуют одну зависимую цепочку; во втором 16 инструкций независимы и идут через восемь регистров. В обоих случаях число инструкций равно $16n$, но замер включает цикл, вызовы, пролог и завершение процесса. Поэтому это оценка, а не точное измерение инструкции:
 
 $$
-L \approx \frac{\text{cycles}}{16n}, \qquad
-\tau \approx \frac{\text{cycles}}{16n}.
+L \approx \frac{\text{cycles}_{lat}}{16n}, \qquad
+r \approx \frac{\text{cycles}_{tp}}{16n}.
 $$
 
-Сравните с [uops.info](https://uops.info) для своего процессора. Чтобы измерить другую инструкцию, замените `imul` в ассемблере на `add`, `div`, `addss`, `mulss`, `vfmadd231ss` или `sqrtss`. Для SSE-регистров используйте ограничение `"+x"`.
+Здесь $L$ - латентность, $r$ - обратная пропускная способность. Не усредняйте два режима: это разные величины. Откройте `asm_bench.s` и убедитесь, что в режиме латентности действительно одна цепочка, а в режиме пропускной способности - независимые цепочки без лишних перемещений.
+
+Сравните с [uops.info](https://uops.info) для своего процессора. В обязательной части измеряйте только `imul`. Для `add`, `div`, `addss`, `vfmadd231ss` и `sqrtss` нужны отдельные шаблоны: разные операнды, неявные регистры, требования ISA и ограничения ассемблера. Не заменяйте строку вслепую: такая замена может не собраться или измерить не то, что вы думаете.
 
 ## Часть B. Аккумуляторы и полином
 
 Полная программа: четыре суммы, Горнер, Эстрин и Горнер на четырех точках. Скопируйте в `ilp.c`.
 
 ```c
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
+#ifndef N
 #define N 1000000
+#endif
 
-static float a[N], x[N], y[N], c[17];
+static float a[N], x[N], y[N], y2[N], c[17];
 
 static double now(void) {
     struct timespec ts;
@@ -132,6 +136,15 @@ static float sum_k8(const float *v, size_t n) {
     }
     for (; i < n; i++) s0 += v[i];
     return ((s0 + s1) + (s2 + s3)) + ((s4 + s5) + (s6 + s7));
+}
+
+static float maxdiff(const float *u, const float *v, size_t n) {
+    float d = 0.0f;
+    for (size_t i = 0; i < n; i++) {
+        float e = fabsf(u[i] - v[i]);
+        if (e > d) d = e;
+    }
+    return d;
 }
 
 static void poly_horner(const float *xx, float *yy, size_t n, const float *cc) {
@@ -195,6 +208,7 @@ static double median5(double *t) {
 
 static void bench_sum(const char *name, sum_fn f) {
     double t[5];
+    sink = f(a, N);                 /* прогрев, не учитывается */
     for (int r = 0; r < 5; r++) {
         double t0 = now();
         sink = f(a, N);
@@ -205,12 +219,20 @@ static void bench_sum(const char *name, sum_fn f) {
 
 static void bench_poly(const char *name, poly_fn f) {
     double t[5];
+    float result = 0.0f;
+
+    f(x, y, N, c);                 /* прогрев */
+    result = sum_k1(y, N);         /* проверка результата */
+
     for (int r = 0; r < 5; r++) {
         double t0 = now();
         f(x, y, N, c);
         t[r] = now() - t0;
+        result = sum_k1(y, N);     /* контрольная сумма вне замера */
     }
-    printf("poly %-7s %8.3f ns/el\n", name, median5(t) * 1e9 / N);
+    sink = result;
+    printf("poly %-7s %8.3f ns/el, checksum=%g\n",
+           name, median5(t) * 1e9 / N, (double)result);
 }
 
 int main(void) {
@@ -229,6 +251,13 @@ int main(void) {
     bench_poly("estrin", poly_estrin);
     bench_poly("horner4", poly_horner4);
 
+    poly_horner(x, y, N, c);
+    poly_estrin(x, y2, N, c);
+    printf("maxdiff horner/estrin = %g\n", (double)maxdiff(y, y2, N));
+    poly_horner4(x, y2, N, c);
+    printf("maxdiff horner/horner4 = %g\n", (double)maxdiff(y, y2, N));
+    printf("sum diff k1/k8 = %g\n", (double)fabsf(sum_k1(a, N) - sum_k8(a, N)));
+
     printf("sink = %g\n", (double)sink);
     return 0;
 }
@@ -238,35 +267,47 @@ int main(void) {
 Сборка и запуск:
 
 ```bash
-gcc -O2 -fno-tree-vectorize ilp.c -lm -o ilp
-./ilp
+gcc -O2 -fno-tree-vectorize -DN=8192 ilp.c -lm -o ilp-small
+gcc -O2 -fno-tree-vectorize -DN=1000000 ilp.c -lm -o ilp-large
+./ilp-small
+./ilp-large
 ```
 
-`-fno-tree-vectorize` отключает SIMD: мы измеряем ILP, а не векторизацию. Программа делает по пять запусков и печатает медиану в наносекундах на элемент.
+`-fno-tree-vectorize` отключает автовекторизацию GCC, но не остальные оптимизации: компилятор все еще может разворачивать циклы, переставлять инструкции и использовать FMA. Обязательно проверяйте ассемблер. Маленький набор (`N=8192`) помещается в кэш и показывает влияние зависимостей; большой (`N=1000000`) добавляет ограничение по памяти. Программа делает по пять запусков и печатает медиану в наносекундах на элемент.
 
-Посмотрите на `sum_k1` ... `sum_k8`: при каком $k$ время перестает падать? Сравните с $k = L / \tau$ из части A. Затем сравните `poly_horner`, `poly_estrin` и `poly_horner4`: у Горнера длина цепочки 16 FMA, у Эстрина - $O(\log 16)$, а `poly_horner4` использует независимые точки.
+Посмотрите на `sum_k1` ... `sum_k8`: при каком $k$ время перестает падать? Сравните с $k = L / r$ из части A. Затем сравните `poly_horner`, `poly_estrin` и `poly_horner4`: у Горнера длина цепочки 16 FMA, у Эстрина - $O(\log 16)$, а `poly_horner4` использует независимые точки.
 
 Для `llvm-mca` сохраните ассемблер и подайте его модели:
 
 ```bash
-gcc -O2 -fno-tree-vectorize -S ilp.c -o ilp.s
-llvm-mca -mcpu=native -iterations=100 < ilp.s
+gcc -O2 -march=skylake -fno-tree-vectorize -S ilp.c -o ilp.s
+llvm-mca -mcpu=skylake -iterations=100 < ilp.s
 ```
 
-Сравните предсказание модели с замером. Модель не знает вашу частоту, турбо-режим и состояние кэша, поэтому совпадение не обязано быть точным.
+`skylake` - пример; подставьте модель своего CPU и согласуйте `-march` с `-mcpu`. Не подавайте модели весь файл: вырежьте внутренний цикл `sum_k8` или полинома в отдельный `.s`, иначе модель проанализирует служебные функции и не тот участок. Сравните предсказание с замером. Модель не знает вашу частоту, турбо-режим и состояние кэша, поэтому совпадение не обязано быть точным.
 
 ## Критерии готовности
 
-- `asm_bench` собран, оба режима замерены через `perf stat -e cycles`.
-- Для `imul` получены $L$ и $\tau$ и сверены с uops.info.
-- `ilp` собран с `-fno-tree-vectorize`, пять запусков, медианы записаны.
+- `asm_bench` собран, оба режима замерены через `perf stat -r 5 -e cycles`.
+- Для `imul` получены $L$ и $r$ и сверены с uops.info.
+- `ilp` собран с `-fno-tree-vectorize` для `N=8192` и `N=1000000`, пять запусков, медианы записаны.
+- Проверена корректность сумм и полиномов с допуском.
 - Объяснено, при каком числе аккумуляторов рост прекращается.
 - Сравнены Горнер, Эстрин и Горнер на четырех точках.
 
 ## Вопросы
 
 1. Почему латентность `add` равна 1, а пропускная способность - 0.25? Что это значит для программы?
-2. Почему сумма с одним аккумулятором упирается в латентность сложения, а с четырьмя - нет?
+2. Почему сумма с одним аккумулятором упирается в латентность сложения, а с несколькими - нет? При каком $k$ рост прекращается?
 3. Почему `div` стоит десятки тактов и как это обходят компиляторы?
 4. Почему `poly_estrin` быстрее `poly_horner`, хотя операций у него не меньше?
 5. Где `llvm-mca` ошибается и почему его прогноз не заменяет замер?
+
+## Что сдать
+
+1. Условия: CPU, компилятор, флаги, `n`, число запусков.
+2. Часть A: таблица `L` и `r` для `imul`; если делали дополнительные инструкции, добавьте их отдельными шаблонами. Сравнение с uops.info.
+3. Часть B: таблица `sum_k1`, `sum_k2`, `sum_k4`, `sum_k8`; таблица `poly_horner`, `poly_estrin`, `poly_horner4`; медианы пяти запусков для `N=8192` и `N=1000000`.
+4. Проверка корректности сумм и полиномов с допуском.
+5. Сравнение прогноза `llvm-mca` с замером и объяснение расхождения.
+6. Ответы на вопросы.

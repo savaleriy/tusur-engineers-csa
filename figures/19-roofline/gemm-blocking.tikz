@@ -1,0 +1,61 @@
+\begin{tikzpicture}[x=1mm, y=1mm, font=\small]
+  \tikzset{
+    mtx/.style={draw=fg, thick, fill=boxfill},
+    ablk/.style={fill=accent!16!mixbg, draw=accent, thick},
+    bblk/.style={fill=accentb!16!mixbg, draw=accentb, thick},
+    cblk/.style={fill=accent!10!mixbg, draw=accent, thick},
+    micro/.style={fill=accentb!40!mixbg, draw=accentb, very thick},
+    hdr/.style={font=\small\bfseries},
+    note/.style={font=\scriptsize, text=muted, align=center},
+    op/.style={font=\Large},
+  }
+
+  % A: M rows x K columns
+  \draw[mtx] (0,0) rectangle (50,40);
+  \fill[ablk] (0,20) rectangle (25,40);
+  \node[hdr] at (25,51) {$A$};
+  \node[note] at (12.5,30) {$MC \times KC$};
+  \node[note] at (37,10) {$K$};
+
+  % B: K rows x N columns
+  \draw[mtx] (65,0) rectangle (105,50);
+  \fill[bblk] (65,25) rectangle (95,50);
+  \node[hdr] at (85,63) {$B$};
+  \node[note] at (80,37) {$KC \times NC$};
+  \node[note] at (100,10) {$N$};
+
+  % C: M rows x N columns
+  \draw[mtx] (120,0) rectangle (170,40);
+  \fill[cblk] (120,20) rectangle (150,40);
+  \fill[micro] (120,20) rectangle (135,25);
+  \node[hdr] at (145,45) {$C$};
+  \node[note] at (142,30) {$MC \times NC$};
+  \node[note] at (140,14) {$MR \times NR$};
+  \node[note] at (162,10) {$N$};
+
+  \node[op] at (57.5,20) {$\times$};
+  \node[op] at (112.5,20) {$=$};
+
+  % loop order
+  \node[note, anchor=west] at (0,-12)
+    {порядок: \texttt{jc} $\to$ \texttt{pc} $\to$ \texttt{ic} $\to$ \texttt{jr} $\to$ \texttt{ir}};
+
+  % cache annotations
+  \node[note, anchor=west] at (0,-22)
+    {$B$-панель $KC \times NC$: L3/L2};
+  \node[note, anchor=west] at (0,-29)
+    {$A$-панель $MC \times KC$: L2};
+  \node[note, anchor=west] at (0,-36)
+    {микротайл $MR \times NR$: L1 и регистры};
+
+  % braces
+  \draw[decorate, decoration={brace, amplitude=3pt, mirror}, accent]
+    (0,41) -- (25,41) node[midway, above=4pt, note] {$KC$};
+  \draw[decorate, decoration={brace, amplitude=3pt}, accent]
+    (-1,20) -- (-1,40) node[midway, left=4pt, note, rotate=90] {$MC$};
+  \draw[decorate, decoration={brace, amplitude=3pt, mirror}, accentb]
+    (65,51) -- (95,51) node[midway, above=4pt, note] {$NC$};
+  \draw[decorate, decoration={brace, amplitude=3pt}, accentb]
+    (64,25) -- (64,50) node[midway, left=4pt, note, rotate=90] {$KC$};
+
+\end{tikzpicture}

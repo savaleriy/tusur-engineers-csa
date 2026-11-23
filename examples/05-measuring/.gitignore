@@ -1,0 +1,5 @@
+/heat
+/build/
+a.out
+gmon.out
+perf.data

@@ -67,8 +67,8 @@ nav:
       - "2. Целые числа и битовые операции": modules/02-integers.md
       - "3. Чтение ассемблера: ISA, вызовы и стек": modules/03-assembly.md
       - "4. Плавающая точка: IEEE 754": modules/04-floating-point.md
-      - "5. Как измерять производительность (WIP)": modules/05-measuring.md
-      - "6. Конвейер, ILP и планирование (WIP)": modules/06-pipeline-ilp.md
+      - "5. Как измерять производительность": modules/05-measuring.md
+      - "6. Конвейер, ILP и планирование": modules/06-pipeline-ilp.md
       - "7. Ветвления, косвенные вызовы и раскладка кода (WIP)": modules/07-branches.md
       - "8. Компилятор: флаги, UB и контракты (WIP)": modules/08-compiler.md
       - "9. Иерархия памяти (WIP)": modules/09-memory.md
@@ -88,8 +88,8 @@ nav:
       - "2. Биты без ветвлений": tasks/02-bits.md
       - "3. Чтение ассемблера": tasks/03-assembly.md
       - "4. Плавающая точка и точность": tasks/04-floating-point.md
-      - "5. Профилирование черного ящика (WIP)": tasks/05-profiling.md
-      - "6. Конвейер, ILP и планирование (WIP)": tasks/06-pipeline-ilp.md
+      - "5. Экспериментальный анализ и оптимизация незнакомой программы": tasks/05-profiling.md
+      - "6. Конвейер, ILP и планирование": tasks/06-pipeline-ilp.md
       - "7. Ветвления и раскладка кода (WIP)": tasks/07-branches.md
       - "8. Компилятор и неопределенное поведение (WIP)": tasks/08-compiler.md
       - "9. Латентность и пропускная способность памяти (WIP)": tasks/09-memory.md

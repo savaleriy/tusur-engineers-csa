@@ -1,0 +1,56 @@
+\begin{tikzpicture}[x=1mm, y=1mm, font=\small]
+  \tikzset{
+    mtx/.style={draw=fg, thick, fill=boxfill},
+    stripA/.style={fill=accent!22!mixbg, draw=accent, thick},
+    stripB/.style={fill=accentb!22!mixbg, draw=accentb, thick},
+    shared/.style={fill=boxfill, draw=fg, thick},
+    hdr/.style={font=\small\bfseries},
+    note/.style={font=\scriptsize, text=muted, align=center},
+    arr/.style={-{Stealth}, thick, draw=muted},
+  }
+
+  % ---- OpenMP panel ----
+  \node[hdr] at (45,72) {OpenMP: одна машина};
+  \draw[shared] (10,55) rectangle (90,65);
+  \node[note] at (50,60) {$B$-панель: общая, только чтение};
+
+  \draw[mtx] (0,0) rectangle (10,50);
+  \node[note, rotate=90] at (5,25) {$A$: своя};
+
+  \draw[mtx] (25,0) rectangle (105,50);
+  \foreach \t in {0,...,3} {
+    \fill[stripA] (25+20*\t,0) rectangle (45+20*\t,50);
+    \draw[fg, thick] (25+20*\t,0) -- (25+20*\t,50);
+    \node[note] at (35+20*\t,25) {$T_{\t}$};
+  }
+  \node[note] at (65,-6) {$C$: столбцы делятся между потоками};
+
+  \draw[arr] (10,30) -- (24,30);
+  \draw[arr] (50,54) -- (50,51);
+
+  % ---- MPI panel ----
+  \node[hdr] at (175,72) {MPI: несколько узлов};
+  \draw[shared] (140,55) rectangle (210,65);
+  \node[note] at (175,60) {$B$: широковещательная рассылка};
+
+  \draw[mtx] (120,0) rectangle (130,50);
+  \node[note, rotate=90] at (125,25) {$A$: своя};
+
+  \draw[mtx] (145,0) rectangle (215,50);
+  \foreach \r in {0,...,3} {
+    \fill[stripB] (145,12.5*\r) rectangle (215,12.5+12.5*\r);
+    \draw[fg, thick] (145,12.5*\r) -- (215,12.5*\r);
+    \node[note] at (180,6.25+12.5*\r) {$R_{\r}$};
+  }
+  \node[note] at (180,-6) {$C$: строки делятся между рангами};
+
+  \draw[arr] (130,30) -- (144,30);
+  \draw[arr] (175,54) -- (175,51);
+  \draw[arr] (210,30) -- (228,30) node[midway, above, note] {Gatherv};
+
+  \node[note, anchor=west] at (0,-18)
+    {сначала OpenMP внутри узла, затем MPI между узлами;};
+  \node[note, anchor=west] at (0,-25)
+    {у каждого потока и ранга свои блоки $C$, поэтому ложного разделения нет.};
+
+\end{tikzpicture}
